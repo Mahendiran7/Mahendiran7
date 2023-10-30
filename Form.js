@@ -8,6 +8,7 @@ function Form() {
     email: "",
     password: "",
     location:"",
+    hobbies:[],
   });
 
   const locationoption = [
@@ -58,6 +59,8 @@ function Form() {
       lastname: "",
       email: "",
       password: "",
+      location:"",
+      hobbies:[],
     });
     setlist([...list, student]);
   };
@@ -109,11 +112,11 @@ function Form() {
           </div>
           <div className="col-6">
             <lable class="form-lable">location</lable>
-            <Select options={locationoption} onChange={(e)=>setstudent({...student,location:e.value})}/>
+            <Select options={locationoption} value={locationoption.filter((op)=>op.value===student.location)} onChange={(e)=>setstudent({...student,location:e.value})}/>
           </div>
           <div className="col-6">
             <lable class="form-lable">Hobbies</lable>
-            <Select isMulti options={hobbiesoption}  onChange={(e)=>setstudent({...student,hobbies:e.value})}/>
+            <Select isMulti options={hobbiesoption} value={hobbiesoption.filter((op)=>{return student.hobbies.some((pt)=>op.value===pt)})} onChange={(e)=>setstudent({...student,hobbies:e.map((hobby)=>hobby.value)})}/>
           </div>
         </div>
         <div className="col-6">
@@ -160,8 +163,7 @@ function Form() {
                   <td>{student.email}</td>
                   <td>{student.password}</td>
                   <td>{student.location}</td>
-                  <td>{student.hobbies}</td>
-                 
+                  <td>{student.hobbies.join(",")}</td>
                 </tr>
               );
             })}
