@@ -1,7 +1,10 @@
+import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 function Form() {
+  const navigate = useNavigate()
   const [student, setstudent] = useState({
     firstname: "",
     lastname: "",
@@ -52,19 +55,44 @@ function Form() {
           return;
         }
       }
+      {
+        if (student.location==="")
+        {toast.error("location required");
+      return;
+        }
+      }
+      {
+        if (student.hobbies.length<=0) {
+          toast.error("hobbies required");
+          return;
+        }
+      }
     }
-    toast.success("form submited");
-    setstudent({
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      location:"",
-      hobbies:[],
-    });
-    setlist([...list, student]);
+    axios.post("https://653f760e9e8bd3be29e09edc.mockapi.io/Students",student).then((res)=>{
+      if(res.status===201){
+        console.log(res);
+      toast.success("form submited");
+      setstudent({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        location:"",
+        hobbies:[],
+      });
+      setlist([...list, student]);
+      navigate("/student")
+
+      }
+
+      
+    }).catch((error)=>{
+      console.log(error);
+    })
+   
+   
   };
-  console.log(student);
+ 
   return (
     <>
       <div className="container mt-5 w-50">
