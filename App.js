@@ -13,6 +13,8 @@ import Forms from "./components/Forms";
 import Table from "./components/Table";
 import Form from "./components/Form";
 import { Toaster } from "react-hot-toast";
+import StudentList from "./components/StudentList";
+import StudentView from "./components/StudentView";
 function App() {
  
   return (
@@ -27,7 +29,9 @@ function App() {
           <Route path="/forms" element={<Forms/>}/>
           <Route path="/table" element={<Table/>}/>
           <Route path="/form" element={<Form/>}/>
-          <Route path="/profile" element={<Profile />} >
+          <Route path="/student" element={<StudentList/>}/>
+          <Route path="/student/:id" element={<StudentView/>}/>
+          <Route path="/profile" element={<Profile />}>
             <Route path="number" element={<Number/>}>
               <Route path="run" element={<Run/>}/>
             </Route>
