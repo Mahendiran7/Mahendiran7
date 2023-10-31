@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Popover, PopoverHeader } from "reactstrap";
 function StudentList() {
   const [student, setstudent] = useState([]);
   const [loading, setloading] = useState(true)
+  const [deleteId,setdeleteId]= useState('')
   const navigate =  useNavigate()
   const fetchStudentlist = () => {
     axios
@@ -69,10 +71,20 @@ function StudentList() {
                 <td>{list.email}</td>
                 <td>{list.password}</td>
                 <td>{list.location}</td>
-                <td>{list.hobbies}</td>
+                <td>{list.hobbies.join(",")}</td>
                <td> <button className="btn btn-sm btn-outline-primary" onClick={()=>navigate(`/student/${list.id}`)}>View</button>
                 <button className="btn btn-sm btn-outline-warning">Edit</button>
-                <button className="btn btn-sm btn-outline-danger" onClick={()=>handledelete(list.id)}>Delete</button>
+                <button className="btn btn-sm btn-outline-danger" id={`popover-${i}`} onClick={()=>setdeleteId(list.id)}>Delete</button>
+                <Popover target={`popover-${i}`} isOpen={list.id===deleteId}>
+                  <PopoverHeader>
+                    Are you Sure?
+                  </PopoverHeader>
+                  <h5>Do you want to delete permenently?</h5>
+                  <div>
+                    <button className="btn btn-sm btn-outline-primary mx-3" onClick={()=>handledelete(list.id)}>Yes</button>
+                    <button className="btn btn-sm btn-outline-danger mx-3">No</button>
+                  </div>
+                </Popover>
                 </td>
               </tr>
               })
