@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 function StudentList() {
   const [student, setstudent] = useState([]);
   const [loading, setloading] = useState(true)
@@ -10,7 +11,7 @@ function StudentList() {
       .get("https://653f760e9e8bd3be29e09edc.mockapi.io/Students")
       .then((res) => {
         setstudent(res.data);
-        setloading(!loading)
+        setloading(false)
       })
       .catch((error) => {
         console.log(error);
@@ -19,6 +20,21 @@ function StudentList() {
   useEffect(() => {
     fetchStudentlist();
   }, []);
+
+  const handledelete =(id)=>{
+    console.log(id);
+    if(id===undefined){
+      return toast.error("Id Required")
+    }
+    axios.delete(`https://653f760e9e8bd3be29e09edc.mockapi.io/Students/${id}`).then((res)=>{
+     if (res.status===200){
+      toast.success("Deleted SuccessFully")
+      fetchStudentlist()
+     }
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
   return (
     <div className="container my-5">
       <div className="d-flex justify-content-between">
@@ -56,7 +72,7 @@ function StudentList() {
                 <td>{list.hobbies}</td>
                <td> <button className="btn btn-sm btn-outline-primary" onClick={()=>navigate(`/student/${list.id}`)}>View</button>
                 <button className="btn btn-sm btn-outline-warning">Edit</button>
-                <button className="btn btn-sm btn-outline-danger">Delete</button>
+                <button className="btn btn-sm btn-outline-danger" onClick={()=>handledelete(list.id)}>Delete</button>
                 </td>
               </tr>
               })
