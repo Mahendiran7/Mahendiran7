@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+
 import {
   Modal,
   ModalBody,
@@ -10,11 +11,13 @@ import {
   Popover,
   PopoverHeader,
 } from "reactstrap";
+import Select from "react-select";
 function StudentList() {
   const [student, setstudent] = useState([]);
   const [loading, setloading] = useState(true);
   const [deleteId, setdeleteId] = useState("");
-  const [editmodal,seteditmodal]= useState(false);
+  const [editmodal, seteditmodal] = useState(false);
+  const [editdata, seteditdata] = useState({});
   const navigate = useNavigate();
   const fetchStudentlist = () => {
     axios
@@ -47,6 +50,11 @@ function StudentList() {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const onEdit = (data) => {
+    console.log(data);
+    seteditmodal(!editmodal);
+    seteditdata(data);
   };
   return (
     <div className="container my-5">
@@ -97,7 +105,10 @@ function StudentList() {
                       >
                         View
                       </button>
-                      <button className="btn btn-sm btn-outline-warning" onClick={()=>seteditmodal(!editmodal)}>
+                      <button
+                        className="btn btn-sm btn-outline-warning"
+                        onClick={() => onEdit(list.id)}
+                      >
                         Edit
                       </button>
                       <button
@@ -137,14 +148,53 @@ function StudentList() {
         </table>
       </div>
       <Modal isOpen={editmodal}>
-        <ModalHeader>Edit Student</ModalHeader>
-        <ModalBody>changes</ModalBody>
+        <ModalHeader toggle={() => seteditmodal(!editmodal)}>
+          Edit Student
+        </ModalHeader>
+        <ModalBody>
+          {" "}
+          <div className="container">
+            <div className="row">
+              <div className="col-6">
+                <lable class="form-lable">first name</lable>
+                <input type="text" class="form-control" name="firstname" />
+              </div>
+              <div className="col-6">
+                <lable class="form-lable">Last name</lable>
+                <input type="text" class="form-control" name="lastname"></input>
+              </div>
+              <div className="col-6">
+                <lable class="form-lable">Email</lable>
+                <input type="email" class="form-control" name="email"></input>
+              </div>
+              <div className="col-6">
+                <lable class="form-lable">Password</lable>
+                <input
+                  type="password"
+                  class="form-control"
+                  name="password"
+                ></input>
+              </div>
+              <div className="col-6">
+                <lable class="form-lable">location</lable>
+                <Select />
+              </div>
+              <div className="col-6">
+                <lable class="form-lable">Hobbies</lable>
+                <Select isMulti />
+              </div>
+            </div>
+          </div>
+        </ModalBody>
         <ModalFooter>
           <div>
             <button className="btn btn-sm btn-outline-primary mx-3">
               Update
             </button>
-            <button className="btn btn-sm btn-outline-danger mx-3">
+            <button
+              className="btn btn-sm btn-outline-danger mx-3"
+              onClick={() => seteditmodal(!editmodal)}
+            >
               Cancel
             </button>
           </div>
