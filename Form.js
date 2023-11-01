@@ -149,11 +149,11 @@ function Form() {
         </div>
         <div className="col-6">
             <div>
-                <input type="radio" onChange={(e)=>console.log(e)}/>
+                <input type="radio" id="checke1" value={"Male"} checked={student.gender==="Male"} onChange={(e)=>{setstudent({...student,gender:e.target.value})}}/>
                 <label>Male</label>
             </div>
             <div>
-                <input type="radio"></input>
+                <input type="radio"id="checke2" value={"Female"} checked={student.gender==="Female"} onChange={(e)=>{setstudent({...student,gender:e.target.value})}}/>
                 <label>Female</label>
             </div>
         </div>
