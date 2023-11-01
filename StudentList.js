@@ -107,7 +107,7 @@ function StudentList() {
                       </button>
                       <button
                         className="btn btn-sm btn-outline-warning"
-                        onClick={() => onEdit(list.id)}
+                        onClick={() => onEdit(list)}
                       >
                         Edit
                       </button>
@@ -157,15 +157,15 @@ function StudentList() {
             <div className="row">
               <div className="col-6">
                 <lable class="form-lable">first name</lable>
-                <input type="text" class="form-control" name="firstname" />
+                <input type="text" class="form-control" name="firstname" value={editdata.firstname}/>
               </div>
               <div className="col-6">
                 <lable class="form-lable">Last name</lable>
-                <input type="text" class="form-control" name="lastname"></input>
+                <input type="text" class="form-control" name="lastname"value={editdata.lastname}></input>
               </div>
               <div className="col-6">
                 <lable class="form-lable">Email</lable>
-                <input type="email" class="form-control" name="email"></input>
+                <input type="email" class="form-control" name="email" value={editdata.email}></input>
               </div>
               <div className="col-6">
                 <lable class="form-lable">Password</lable>
@@ -173,6 +173,7 @@ function StudentList() {
                   type="password"
                   class="form-control"
                   name="password"
+                  value={editdata.password}
                 ></input>
               </div>
               <div className="col-6">
